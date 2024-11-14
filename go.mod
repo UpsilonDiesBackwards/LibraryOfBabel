@@ -1,4 +1,4 @@
-module github.com/UpsilonDiesBackwards/3DRenderer
+module github.com/UpsilonDiesBackwards/LibraryOfBabel
 
 go 1.23.2
 

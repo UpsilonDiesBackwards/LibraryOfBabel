@@ -2,8 +2,8 @@ package rendering
 
 import (
 	"fmt"
-	"github.com/UpsilonDiesBackwards/3DRenderer/engine/common"
-	"github.com/UpsilonDiesBackwards/3DRenderer/tools"
+	"github.com/UpsilonDiesBackwards/LibraryOfBabel/engine/common"
+	"github.com/UpsilonDiesBackwards/LibraryOfBabel/tools"
 	"github.com/go-gl/gl/v4.2-core/gl"
 	"github.com/go-gl/mathgl/mgl32"
 )

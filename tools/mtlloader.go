@@ -2,7 +2,7 @@ package tools
 
 import (
 	"bufio"
-	"github.com/UpsilonDiesBackwards/3DRenderer/engine/common"
+	"github.com/UpsilonDiesBackwards/LibraryOfBabel/engine/common"
 	"os"
 	"strings"
 )

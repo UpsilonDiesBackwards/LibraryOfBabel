@@ -2,11 +2,10 @@ package rendering
 
 import (
 	"fmt"
-	"github.com/UpsilonDiesBackwards/3DRenderer/tools"
+	"github.com/UpsilonDiesBackwards/LibraryOfBabel/tools"
 	"github.com/go-gl/gl/v4.2-core/gl"
 	"github.com/go-gl/glfw/v3.2/glfw"
 	"github.com/go-gl/mathgl/mgl32"
-	"github.com/go-gl/mathgl/mgl64"
 	"strings"
 	"time"
 )
@@ -14,7 +13,6 @@ import (
 type Renderer struct {
 	Window  *Window
 	Objects map[string]*RenderableObject
-	Camera  *Camera
 	Shader  *Shader
 
 	project  mgl32.Mat4
@@ -43,18 +41,8 @@ func NewRenderer(window *Window) *Renderer {
 	}
 
 	return &Renderer{
-		Window:  window,
-		Objects: make(map[string]*RenderableObject),
-		Camera: &Camera{
-			Position:    mgl64.Vec3{0, 0, 0},
-			Up:          mgl64.Vec3{0, 1, 0},
-			WorldUp:     mgl64.Vec3{0, 1, 0},
-			Yaw:         -90,
-			Pitch:       0,
-			Speed:       12,
-			Sensitivity: 0.075,
-			Fov:         60,
-		},
+		Window:   window,
+		Objects:  make(map[string]*RenderableObject),
 		Shader:   shader,
 		project:  projection,
 		lastTime: time.Now(),
@@ -85,7 +73,7 @@ func (r *Renderer) GetObject(name string) *RenderableObject {
 	return r.Objects[name]
 }
 
-func (r *Renderer) Draw() {
+func (r *Renderer) Draw(camera Camera) {
 	r.CalculateDeltaTime()
 
 	gl.Clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
@@ -93,7 +81,7 @@ func (r *Renderer) Draw() {
 	r.Shader.Use()
 
 	r.Shader.SetMat4ByName("projection", r.project)
-	r.Shader.SetMat4ByName("view", r.Camera.GetTransform())
+	r.Shader.SetMat4ByName("view", camera.GetTransform())
 
 	for _, object := range r.Objects {
 		object.Draw(r.Shader)

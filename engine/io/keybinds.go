@@ -2,9 +2,10 @@ package io
 
 import (
 	"fmt"
-	"github.com/UpsilonDiesBackwards/3DRenderer/engine/rendering"
+	"github.com/UpsilonDiesBackwards/LibraryOfBabel/engine/rendering"
 	"github.com/go-gl/glfw/v3.2/glfw"
 	"github.com/go-gl/mathgl/mgl32"
+	"github.com/go-gl/mathgl/mgl64"
 )
 
 var ViewportTransform mgl32.Mat4
@@ -22,10 +23,12 @@ func InputRunner(win *rendering.Window, deltaTime float64, camera *rendering.Cam
 	}
 
 	if ActionState[VP_FORW] {
-		camera.Position = camera.Position.Add(camera.Front.Mul(adjCSpeed))
+		horizontalFront := mgl64.Vec3{camera.Front.X(), 0, camera.Front.Z()}.Normalize()
+		camera.Position = camera.Position.Add(horizontalFront.Mul(adjCSpeed))
 	}
 	if ActionState[VP_BACK] {
-		camera.Position = camera.Position.Sub(camera.Front.Mul(adjCSpeed))
+		horizontalFront := mgl64.Vec3{camera.Front.X(), 0, camera.Front.Z()}.Normalize()
+		camera.Position = camera.Position.Sub(horizontalFront.Mul(adjCSpeed))
 	}
 	if ActionState[VP_LEFT] {
 		camera.Position = camera.Position.Sub(camera.Front.Cross(camera.Up).Mul(adjCSpeed))
@@ -33,14 +36,8 @@ func InputRunner(win *rendering.Window, deltaTime float64, camera *rendering.Cam
 	if ActionState[VP_RGHT] {
 		camera.Position = camera.Position.Add(camera.Front.Cross(camera.Up).Mul(adjCSpeed))
 	}
-	if ActionState[VP_UP] {
-		camera.Position = camera.Position.Add(camera.Up.Mul(adjCSpeed))
-	}
-	if ActionState[VP_DOWN] {
-		camera.Position = camera.Position.Sub(camera.Up.Mul(adjCSpeed))
-	}
 
-	if ActionState[ED_ZOOM] {
+	if ActionState[VP_SPRINT] {
 		isZooming = !isZooming
 	}
 

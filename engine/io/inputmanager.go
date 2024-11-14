@@ -1,7 +1,7 @@
 package io
 
 import (
-	"github.com/UpsilonDiesBackwards/3DRenderer/engine/rendering"
+	"github.com/UpsilonDiesBackwards/LibraryOfBabel/engine/rendering"
 	"github.com/go-gl/glfw/v3.2/glfw"
 	"github.com/go-gl/mathgl/mgl64"
 )
@@ -23,25 +23,21 @@ const (
 	VP_BACK
 	VP_LEFT
 	VP_RGHT
-	VP_UP
-	VP_DOWN
+	VP_SPRINT
 
-	ED_ZOOM
 	ED_QUIT
 )
 
 var ActionState = make(map[KeyAction]bool)
 
 var keyToActionMap = map[glfw.Key]KeyAction{
-	glfw.KeyW:     VP_FORW,
-	glfw.KeyS:     VP_BACK,
-	glfw.KeyA:     VP_LEFT,
-	glfw.KeyD:     VP_RGHT,
-	glfw.KeySpace: VP_UP,
-	glfw.KeyC:     VP_DOWN,
+	glfw.KeyW:         VP_FORW,
+	glfw.KeyS:         VP_BACK,
+	glfw.KeyA:         VP_LEFT,
+	glfw.KeyD:         VP_RGHT,
+	glfw.KeyLeftShift: VP_SPRINT,
 
-	glfw.KeyLeftShift: ED_ZOOM,
-	glfw.KeyEscape:    ED_QUIT,
+	glfw.KeyEscape: ED_QUIT,
 }
 
 func InputManager(win *rendering.Window, uI *UserInput) {
